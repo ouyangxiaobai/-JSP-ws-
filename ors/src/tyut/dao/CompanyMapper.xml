@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tyut.dao.ICompanyDao">
+	<select id="findAllCompnaies" resultType="Company">
+		select * from company where pubtime is not null order by pubtime desc
+	</select>
+	
+ 	<select id="findCompaniesByParams" parameterType="java.util.Map" resultType="Company">
+		select * from company
+				where pubtime is not null
+			<if test="trade != null"> 
+				AND trade = #{trade} 
+			</if> 
+			<if test="salary != null"> 
+				AND salary = #{salary} 
+			</if> 
+			<if test="pubtime != null"> 
+				AND to_char(pubtime,'YYYY-MM-DD HH24:MI:SS') &lt; #{pubtime} 
+			</if> 
+	</select> 
+	
+	<insert id="saveCompany" parameterType="Company">
+	 	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select seq.nextval from dual
+		</selectKey>
+		insert into company (id,username,password,name,location,phone,email,trade,tip,salary)
+		values
+		(#{id},#{username},#{password},#{name},#{location},#{phone},#{email},#{trade},#{tip},#{salary})
+	</insert>
+	
+	<select id="findCompanyByName" parameterType="string" resultType="Company">
+		select * from company where username=#{username}
+	</select>
+	
+	<select id="findCompanyByNameAndPassword"  resultType="Company">
+		select * from company where username=#{0} and password=#{1}
+	</select>
+	
+	<select id="findCompanyById" parameterType="long" resultType="Company">
+		select * from company where id=#{id}
+	</select>
+	
+	<update id="updateCompany" parameterType="Company">
+		update company set name=#{name},location=#{location},
+		phone=#{phone},email=#{email},trade=#{trade},salary=#{salary},tip=#{tip}
+		where id=#{id}
+	</update>
+	
+	<update id="udpatePubtime" parameterType="Company">
+		update company set pubtime=#{pubtime,jdbcType=TIMESTAMP}
+		where id=#{id}
+	</update>
+	
+	<update id="ZeroPubtime" parameterType="Company">
+		update company set pubtime=null
+		where id=#{id}
+	</update>
+</mapper>

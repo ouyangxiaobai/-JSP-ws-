@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tyut.dao.IPersonDao">
+	<insert id="savePerson" parameterType="Person">
+	 	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select seq.nextval from dual
+		</selectKey>
+		insert into person (id,username,password,name,sex,birthday,school,phone,email,trade,salary,tip)
+		values
+		(#{id},#{username},#{password},#{name},#{sex},#{birthday},#{school},#{phone},#{email},#{trade},#{salary},#{tip})
+	</insert>
+	<select id="findPersonByName" parameterType="string" resultType="Person">
+		select * from person where username=#{username}
+	</select>
+	<select id="findPersonByNameAndPassword"  resultType="Person">
+		select * from person where username=#{0} and password=#{1}
+	</select>
+	<select id="findPersonById"  parameterType="long" resultType="Person">
+		select * from person where id=#{id}
+	</select>
+	<update id="updatePerson" parameterType="Person">
+		update person set name=#{name},sex=#{sex},birthday=#{birthday},school=#{school},
+		phone=#{phone},email=#{email},trade=#{trade},salary=#{salary},tip=#{tip}
+		where id=#{id}
+	</update>
+	
+	<update id="udpatePubtime" parameterType="Person">
+		update person set pubtime=#{pubtime,jdbcType=TIMESTAMP}
+		where id=#{id}
+	</update>
+	
+	<update id="ZeroPubtime" parameterType="Person">
+		update person set pubtime=null
+		where id=#{id}
+	</update>
+	
+	<select id="findAllPersons" resultType="Person">
+		select * from person where pubtime is not null order by pubtime desc
+	</select>
+	
+ 	<select id="findPersonsByParams" parameterType="java.util.Map" resultType="Person">
+		select * from person
+				where pubtime is not null
+			<if test="trade != null"> 
+				AND trade = #{trade} 
+			</if> 
+			<if test="school != null"> 
+				AND school = #{school} 
+			</if> 
+			<if test="salary != null"> 
+				AND salary = #{salary} 
+			</if> 
+			<if test="pubtime != null"> 
+				AND to_char(pubtime,'YYYY-MM-DD HH24:MI:SS') &lt; #{pubtime} 
+			</if> 
+	</select> 
+</mapper>

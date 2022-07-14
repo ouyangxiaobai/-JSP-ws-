@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../css/base.css" />
+<link rel="stylesheet" href="../css/info-reg.css" />
+<title>网上招聘系统</title>
+<style type="text/css">
+	.error{
+		color:Red;
+		font-size:13px;
+		margin-left:5px;
+		padding-left:16px; 
+	}
+</style>
+</head>
+
+<body>
+<div class="title">
+	<h2>个人信息注册(*为必填项)</h2>
+</div>		
+<form id="fm">
+<div class="main">
+		<p class="short-input ue-clear">
+    		<label>*用户名：</label>
+        	<input id="usr" name="username" type="text"/><span id="validate"></span>
+        </p>	
+
+        <p class="short-input ue-clear">
+    		<label>*密码：</label>
+        	<input name="password" type="password" style="width:258px;height:27px;border:1px solid #C5D6E0"/>
+        </p>
+        <!--
+        <p class="short-input ue-clear">
+    	<label>*头像：</label>
+     	<input type="file" id="img" name="image"/>
+     	<img id="preview" style="height:100px;widdth:100px">
+     	</p>
+     	<script type="text/javascript">
+     	document.querySelector('#img').addEventListener('change', function(){
+            //当没选中图片时，清除预览
+            if(this.files.length === 0){
+                document.querySelector('#preview').src = '';
+                return;
+            }
+            //实例化一个FileReader
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                //当reader加载时，把图片的内容赋值给
+                document.querySelector('#preview').src = e.target.result;
+            };
+
+        //读取选中的图片，并转换成dataURL格式
+        reader.readAsDataURL(this.files[0]);
+        }, false);
+     	</script>
+	-->
+		<p class="short-input ue-clear">
+    		<label>*姓名：</label>
+        	<input name="name" type="text"/>
+        </p>	
+   		<p class="short-input ue-clear">
+    		<label>*性别：</label>
+                <select name="sex" style="width:50px;height:30px;border:1px solid #C5D6E0">
+            	<option value="男">男</option>
+            	<option value="女">女</option>
+            </select>
+   		</p>
+    	<p class="short-input ue-clear">
+    		<label>*出生日期：</label>
+        	<input name="birthday" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+    	</p>
+    	<p class="long-input ue-clear">
+    		<label>*毕业学校：</label>
+        	<input name="school" type="text"/>
+    	</p>
+    	<p class="long-input ue-clear">
+    		<label>*联系方式：</label>
+        	<input name="phone" type="text"/>
+    	</p>
+    	<p class="long-input ue-clear">
+    		<label>电子邮箱：</label>
+        	<input name="email" type="text"/>
+    	</p>
+    	<div class="short-input select ue-clear">
+    		<label>专业类别：</label>
+            <select name="trade" style="width:200px;height:30px;border:1px solid #C5D6E0">
+            	<option>软件工程</option>
+            	<option>经济管理</option>
+            	<option>数学</option>
+            	<option>土木工程</option>
+            	<option>法学</option>
+            </select>
+    	</div>
+        <div class="short-input select ue-clear">
+    		<label>薪资期望：</label>
+            <select name="salary"style="width:200px;height:30px;border:1px solid #C5D6E0">
+            	<option >3000-4000</option>
+            	<option >4001-5000</option>
+                <option >5001-6000</option>
+                <option >6001-7000</option>
+            	<option >7001-8000</option>
+            </select>
+    	</div>
+    	<p class="short-input ue-clear">
+    		<label>个人评价：</label>
+        	<textarea name="tip"placeholder="请输入内容"></textarea>
+    	</p>
+    		<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是否想要现在发布简历：</label>
+        	<input type="checkbox" name="isAuto" checked>
+		<div class="btn ue-clear">
+			<input style="height:50px;width:150px;background-color:#68B86C;color:white;border-radius:5px" type="submit" value="提交"/>
+			<input style="height:50px;width:150px;background-color:#EFF6FA;color:black;border-radius:5px" type="reset" value="清空"/>
+		</div>
+</div>
+</form>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/WdatePicker.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	showRemind('input[type=text], textarea','placeholder');
+	
+	//jquery validate插件前端输入验证
+	 $( "#fm" ).validate({
+	      rules: {
+	          username: {
+	              required: true,
+	              minlength: 4,
+	              maxlength: 10
+	          },
+	          password: {
+	             required:true
+	          },
+	          name: {
+		         required:true
+		      },
+	          birthday: {
+		         required:true
+	          },
+	          school: {
+	        	  required:true 
+	          },
+	          phone: {
+	        	  required:true  
+		      }
+	      },
+	      messages: {
+	          username: {
+	              required: "*不能为空！",
+	              maxlength: $.validator.format( "*长度不得大于10个字符！" ),
+	          	  minlength: $.validator.format( "*长度不得小于4个字符！" )
+	          },
+	          password: {
+	              required: "*不能为空！"
+		      },
+	          name: {
+	              required: "*不能为空！"
+		      },		      
+		      birthday: {
+	              required: "*不能为空！"
+		      },
+		      school: {
+	              required: "*不能为空！"
+		      },
+		      phone: {
+		          required:"*不能为空！"
+			  }
+	      },
+          submitHandler: function(form) {  
+              validate();  //用自定义函数提交表单  
+          } 
+	  });
+	
+	//ajax验证用户名成功后，再进行注册	
+	function validate(){
+		$.ajax({
+			url:"../registerServlet",
+			type:"post",
+	        dataType:"text",
+			data:$("#fm").serialize(),
+			success:function(data){
+				console.log(data);
+				if(data=='该用户名已存在！'){
+					$("#validate").html(data);
+				}else{
+					alert("注册成功！");
+					window.open ('/ors/login.jsp','_top');
+				}
+			}
+		});		
+	}
+	
+</script>
+</html>

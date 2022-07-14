@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+			<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+			"http://mybatis.org/dtd/mybatis-3-config.dtd">
+			<configuration>
+			<typeAliases>
+				<typeAlias type="tyut.bean.Person" alias="Person" />
+				<typeAlias type="tyut.bean.Company" alias="Company" />
+				<typeAlias type="tyut.bean.Employee" alias="Employee" />
+			</typeAliases>
+				<environments default="development">
+					<environment id="development">
+						<transactionManager type="JDBC"></transactionManager>
+						<dataSource type="POOLED">
+							<property name="driver" value="com.mysql.jdbc.Driver" />
+							<property name="url" value="jdbc:mysql://localhost:3306/db_data?useUnicode=true" />
+							<property name="username" value="root" />
+							<property name="password" value="123456" />
+						</dataSource>
+					</environment>
+				</environments>
+				
+				<mappers>
+					<mapper resource="tyut/dao/PersonMapper.xml"/>
+					<mapper resource="tyut/dao/CompanyMapper.xml"/>
+					<mapper resource="tyut/dao/EmployeeMapper.xml"/>
+				</mappers>
+				
+			</configuration>
